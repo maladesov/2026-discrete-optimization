@@ -41,14 +41,22 @@ def run_file(path: str, solver: AbstractSolver):
 
     valid = solution.verify(instance)
 
-    print(f"{solution.objective:.6f}")
-    print(" ".join(str(i) for i in sorted(solution.selected)))
+    print(
+        f"{solution.objective:.6f}",
+        " ".join(str(i) for i in sorted(solution.selected)),
+        sep="\n",
+    )
 
     valid_str = "OK" if valid else "INVALID — coverage incomplete!"
     print(
+        f"{solution.objective:.6f}",
+        " ".join(str(i) for i in sorted(solution.selected)),
         f"[{path}] {solution} | valid={valid_str} | time={elapsed:.2f}s",
+
+        sep="\n",
         file=sys.stderr,
     )
+
     if not valid:
         sys.exit(1)
 
