@@ -38,7 +38,7 @@ jobs:
           python3 src/__main__.py data/sc_10000_2 > output/sc_10000_2.out
 
       - name: save artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: output
           path: output/
