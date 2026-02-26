@@ -12,13 +12,11 @@ class RelaxationSolver(AbstractSolver):
         max_iter: int = 3000,
         tol: float = 1e-6,
         step_init: float = 2.0,
-        step_decay: float = 0.999,
     ):
         super().__init__(verbose)
         self.max_iter = max_iter
         self.tol = tol
         self.step_init = step_init
-        self.step_decay = step_decay
 
     def solve(self, instance: SetCoverInstance) -> SetCoverSolution:
         n, m = instance.n_elements, instance.n_sets
@@ -53,7 +51,7 @@ class RelaxationSolver(AbstractSolver):
             if g_norm_sq < self.tol**2:
                 break
 
-            step = self.step_init * (self.step_decay**it)
+            step = self.step_init / np.sqrt(it + 1)
             lam = np.maximum(0.0, lam + step * g)
 
             if it % 100 == 0 or it == self.max_iter - 1:
