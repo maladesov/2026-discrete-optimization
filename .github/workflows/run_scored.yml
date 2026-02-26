@@ -30,12 +30,12 @@ jobs:
 
       - name: run scored
         run: |
-          python3 src/__main__.py data/sc_157_0 > output/sc_157_0.out
-          python3 src/__main__.py data/sc_330_0 > output/sc_330_0.out
-          python3 src/__main__.py data/sc_1000_11 > output/sc_1000_11.out
-          python3 src/__main__.py data/sc_5000_1 > output/sc_5000_1.out
-          python3 src/__main__.py data/sc_10000_5 > output/sc_10000_5.out
-          python3 src/__main__.py data/sc_10000_2 > output/sc_10000_2.out
+          python3 src/__main__.py data/sc_157_0 > output/sc_157_0.out.txt
+          python3 src/__main__.py data/sc_330_0 > output/sc_330_0.out.txt
+          python3 src/__main__.py data/sc_1000_11 > output/sc_1000_11.out.txt
+          python3 src/__main__.py data/sc_5000_1 > output/sc_5000_1.out.txt
+          python3 src/__main__.py data/sc_10000_5 > output/sc_10000_5.out.txt
+          python3 src/__main__.py data/sc_10000_2 > output/sc_10000_2.out.txt
 
       - name: save artifacts
         uses: actions/upload-artifact@v4
