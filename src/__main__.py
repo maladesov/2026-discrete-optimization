@@ -4,6 +4,7 @@ import time
 
 from solvers import SetCoverInstance, RelaxationSolver
 from solvers.base import AbstractSolver
+from solvers.greedy import GreedySolver
 
 
 def parse_args():
@@ -19,16 +20,21 @@ def parse_args():
     )
     parser.add_argument(
         "--solver",
-        choices=["relaxation"],
+        choices=["relaxation", "greedy"],
         default="relaxation",
         help="Solver to use (default: relaxation)",
     )
     return parser.parse_args()
 
+SOLVERS_MAP = {
+    "greedy": GreedySolver,
+    "relaxation": RelaxationSolver,
+}
 
 def make_solver(name: str):
-    if name == "relaxation":
-        return RelaxationSolver()
+    if name in SOLVERS_MAP:
+        return SOLVERS_MAP[name]()
+
     raise ValueError(f"Unknown solver: {name}")
 
 
