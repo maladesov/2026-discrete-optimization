@@ -28,7 +28,7 @@ jobs:
       - name: create output dir
         run: mkdir -p output
 
-      - name: run scored
+      - name: ПРОГОН НА ОЦЕНКУ
         run: |
           python3 src/__main__.py data/sc_157_0 > output/sc_157_0.out.txt
           python3 src/__main__.py data/sc_330_0 > output/sc_330_0.out.txt
@@ -37,7 +37,7 @@ jobs:
           python3 src/__main__.py data/sc_10000_5 > output/sc_10000_5.out.txt
           python3 src/__main__.py data/sc_10000_2 > output/sc_10000_2.out.txt
 
-      - name: save artifacts
+      - name: СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛЫ
         uses: actions/upload-artifact@v4
         with:
           name: output
