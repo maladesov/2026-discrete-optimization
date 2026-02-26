@@ -1,0 +1,44 @@
+name: Прогон на оцениваемых данных
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_scored:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup python312
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir numpy
+
+      - name: create output dir
+        run: mkdir -p output
+
+      - name: run scored
+        run: |
+          python3 src/__main__.py data/sc_157_0 > output/sc_157_0.out
+          python3 src/__main__.py data/sc_330_0 > output/sc_330_0.out
+          python3 src/__main__.py data/sc_1000_11 > output/sc_1000_11.out
+          python3 src/__main__.py data/sc_5000_1 > output/sc_5000_1.out
+          python3 src/__main__.py data/sc_10000_5 > output/sc_10000_5.out
+          python3 src/__main__.py data/sc_10000_2 > output/sc_10000_2.out
+
+      - name: save artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: output
+          path: output/
