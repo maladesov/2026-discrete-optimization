@@ -87,6 +87,7 @@ class RelaxationSolver(AbstractSolver):
                 selected = best_primal
 
         selected = self._remove_redundant(selected, instance)
+        selected = self._local_search(selected, instance, c, n)
 
         obj = float(np.sum(c[list(selected)]))
         is_optimal = abs(obj - best_lb) <= self.tol * max(1.0, abs(best_lb))
@@ -97,6 +98,32 @@ class RelaxationSolver(AbstractSolver):
             lp_lower_bound=best_lb,
             is_optimal=is_optimal,
         )
+
+    def _local_search(
+        self,
+        selected: set[int],
+        instance: SetCoverInstance,
+        c: np.ndarray,
+        n: int,
+    ) -> set[int]:
+        improved = True
+        selected = set(selected)
+        while improved:
+            improved = False
+            for i in list(selected):
+                trial = selected - {i}
+                covered = np.zeros(n, dtype=bool)
+                for s in trial:
+                    for j in instance.sets[s]:
+                        covered[j] = True
+                if covered.all():
+                    cost_trial = float(np.sum(c[list(trial)]))
+                    cost_selected = float(np.sum(c[list(selected)]))
+                    if cost_trial <= cost_selected:
+                        selected = trial
+                        improved = True
+                        break
+        return selected
 
     def _primal_from_x(
         self,
