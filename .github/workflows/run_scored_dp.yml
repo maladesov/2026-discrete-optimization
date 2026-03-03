@@ -1,0 +1,44 @@
+name: Прогон на оцениваемых данных (Динамическое программирование)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_scored:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup python312
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir numpy
+
+      - name: create output dir
+        run: mkdir -p output
+
+      - name: ПРОГОН НА ОЦЕНКУ
+        run: |
+          python3 src/__main__.py --solver dp data/ks_30_0 > output/ks_30_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_50_0 > output/ks_50_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_200_0 > output/ks_200_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_400_0 > output/ks_400_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_1000_0 > output/ks_1000_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_10000_0 > output/ks_10000_0.out.txt
+
+      - name: СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛЫ
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: output/
