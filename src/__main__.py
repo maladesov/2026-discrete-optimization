@@ -2,10 +2,17 @@ import argparse
 import sys
 import time
 
-from solvers import KnapsackInstance, DPSolver
+from solvers import (
+    KnapsackInstance,
+    DPSolver,
+    SimpleBBSolver,
+    BBSolver,
+)
 
 SOLVERS = {
+    "bb": BBSolver,
     "dp": DPSolver,
+    "simple_bb": SimpleBBSolver,
 }
 
 
@@ -15,7 +22,7 @@ def parse_args():
     parser.add_argument(
         "--solver",
         choices=SOLVERS.keys(),
-        default=SOLVERS.keys().__iter__().__next__(),
+        default=next(iter(SOLVERS.keys())),
     )
     return parser.parse_args()
 

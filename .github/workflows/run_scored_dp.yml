@@ -1,4 +1,4 @@
-name: Прогон на оцениваемых данных
+name: Прогон на оцениваемых данных (Динамическое программирование)
 
 on:
   push:
@@ -30,12 +30,12 @@ jobs:
 
       - name: ПРОГОН НА ОЦЕНКУ
         run: |
-          python3 src/__main__.py data/ks_30_0 > output/ks_30_0.out.txt
-          python3 src/__main__.py data/ks_50_0 > output/ks_50_0.out.txt
-          python3 src/__main__.py data/ks_200_0 > output/ks_200_0.out.txt
-          python3 src/__main__.py data/ks_400_0 > output/ks_400_0.out.txt
-          python3 src/__main__.py data/ks_1000_0 > output/ks_1000_0.out.txt
-          python3 src/__main__.py data/ks_10000_0 > output/ks_10000_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_30_0 > output/ks_30_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_50_0 > output/ks_50_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_200_0 > output/ks_200_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_400_0 > output/ks_400_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_1000_0 > output/ks_1000_0.out.txt
+          python3 src/__main__.py --solver dp data/ks_10000_0 > output/ks_10000_0.out.txt
 
       - name: СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛЫ
         uses: actions/upload-artifact@v4
