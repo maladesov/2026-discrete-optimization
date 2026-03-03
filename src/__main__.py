@@ -1,5 +1,6 @@
 import argparse
 import sys
+import concurrent.futures
 import time
 
 from solvers import (
@@ -14,7 +15,6 @@ SOLVERS = {
     "dp": DPSolver,
     "simple_bb": SimpleBBSolver,
 }
-
 
 def parse_args():
     parser = argparse.ArgumentParser(prog="knapsack")
@@ -44,12 +44,20 @@ def run_file(path: str, solver):
     if not valid:
         sys.exit(1)
 
-
 def main():
     args = parse_args()
     solver = SOLVERS[args.solver]()
+
+    TIMEOUT_SEC = 300
     for path in args.files:
-        run_file(path, solver)
+        with concurrent.futures.ProcessPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(run_file, path, solver)
+            try:
+                future.result(timeout=TIMEOUT_SEC)
+            except concurrent.futures.TimeoutError:
+                print(f"Timeout: {path} exceeded {TIMEOUT_SEC} seconds", file=sys.stderr)
+            except Exception as e:
+                print(f"Error processing file {path}: {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":
