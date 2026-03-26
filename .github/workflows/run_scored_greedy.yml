@@ -1,0 +1,39 @@
+name: Прогон на оцениваемых данных (Greedy)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_scored:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup python312
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: create output dir
+        run: mkdir -p output
+
+      - name: ПРОГОН НА ОЦЕНКУ
+        run: |
+          python3 src/__main__.py --solver greedy data/gc_50_3 > output/gc_50_3.out.txt
+          python3 src/__main__.py --solver greedy data/gc_70_7 > output/gc_70_7.out.txt
+          python3 src/__main__.py --solver greedy data/gc_100_5 > output/gc_100_5.out.txt
+          python3 src/__main__.py --solver greedy data/gc_250_9 > output/gc_250_9.out.txt
+          python3 src/__main__.py --solver greedy data/gc_500_1 > output/gc_500_1.out.txt
+          python3 src/__main__.py --solver greedy data/gc_1000_5 > output/gc_1000_5.out.txt
+
+      - name: СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛЫ
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-greedy
+          path: output/
