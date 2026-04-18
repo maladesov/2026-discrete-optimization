@@ -1,0 +1,44 @@
+name: Прогон на оцениваемых данных (TSP, простой BB)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_scored:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup python312
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir numpy
+
+      - name: create output dir
+        run: mkdir -p output
+
+      - name: ПРОГОН НА ОЦЕНКУ
+        run: |
+          python3 src/__main__.py --solver simple_bb data/tsp_51_1 > output/tsp_51_1.out.txt
+          python3 src/__main__.py --solver simple_bb data/tsp_100_3 > output/tsp_100_3.out.txt
+          python3 src/__main__.py --solver simple_bb data/tsp_200_2 > output/tsp_200_2.out.txt
+          python3 src/__main__.py --solver simple_bb data/tsp_574_1 > output/tsp_574_1.out.txt
+          python3 src/__main__.py --solver simple_bb data/tsp_1889_1 > output/tsp_1889_1.out.txt
+          python3 src/__main__.py --solver simple_bb data/tsp_33810_1 > output/tsp_33810_1.out.txt
+
+      - name: СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛЫ
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: output/
