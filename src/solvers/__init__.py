@@ -5,6 +5,7 @@ from .base import (
     compute_objective,
 )
 from .greedy import GreedySolver
+from .local_search import LocalSearchSolver
 
 __all__ = [
     "AbstractSolver",
@@ -12,4 +13,5 @@ __all__ = [
     "FacilitySolution",
     "compute_objective",
     "GreedySolver",
+    "LocalSearchSolver",
 ]

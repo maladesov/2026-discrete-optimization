@@ -6,10 +6,12 @@ import time
 from solvers import (
     FacilityInstance,
     GreedySolver,
+    LocalSearchSolver,
 )
 
 SOLVERS = {
     "greedy": GreedySolver,
+    "ls": LocalSearchSolver,
 }
 
 
