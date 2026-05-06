@@ -7,11 +7,13 @@ from solvers import (
     FacilityInstance,
     GreedySolver,
     LocalSearchSolver,
+    GRASPSolver,
 )
 
 SOLVERS = {
     "greedy": GreedySolver,
     "ls": LocalSearchSolver,
+    "grasp": GRASPSolver,
 }
 
 
