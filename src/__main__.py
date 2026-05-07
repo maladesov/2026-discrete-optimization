@@ -8,12 +8,14 @@ from solvers import (
     GreedySolver,
     LocalSearchSolver,
     GRASPSolver,
+    LPRelaxSolver,
 )
 
 SOLVERS = {
     "greedy": GreedySolver,
     "ls": LocalSearchSolver,
     "grasp": GRASPSolver,
+    "lp": LPRelaxSolver,
 }
 
 

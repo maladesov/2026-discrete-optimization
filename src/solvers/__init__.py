@@ -7,6 +7,7 @@ from .base import (
 from .greedy import GreedySolver
 from .local_search import LocalSearchSolver
 from .grasp import GRASPSolver
+from .lp_relax import LPRelaxSolver
 
 __all__ = [
     "AbstractSolver",
@@ -16,4 +17,5 @@ __all__ = [
     "GreedySolver",
     "LocalSearchSolver",
     "GRASPSolver",
+    "LPRelaxSolver",
 ]

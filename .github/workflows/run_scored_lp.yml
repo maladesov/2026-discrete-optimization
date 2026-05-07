@@ -1,4 +1,4 @@
-name: Прогон на оцениваемых данных (GRASP)
+name: Прогон на оцениваемых данных (LP-релаксация)
 
 on:
   push:
@@ -30,15 +30,15 @@ jobs:
 
       - name: ПРОГОН НА ОЦЕНКУ
         run: |
-          python3 src/__main__.py --solver grasp data/fl_25_2 > output/fl_25_2.out.txt
-          python3 src/__main__.py --solver grasp data/fl_100_1 > output/fl_100_1.out.txt
-          python3 src/__main__.py --solver grasp data/fl_200_7 > output/fl_200_7.out.txt
-          python3 src/__main__.py --solver grasp data/fl_500_7 > output/fl_500_7.out.txt
-          python3 src/__main__.py --solver grasp data/fl_1000_2 > output/fl_1000_2.out.txt
-          python3 src/__main__.py --solver grasp data/fl_2000_2 > output/fl_2000_2.out.txt
+          python3 src/__main__.py --solver lp data/fl_25_2 > output/fl_25_2.out.txt
+          python3 src/__main__.py --solver lp data/fl_100_1 > output/fl_100_1.out.txt
+          python3 src/__main__.py --solver lp data/fl_200_7 > output/fl_200_7.out.txt
+          python3 src/__main__.py --solver lp data/fl_500_7 > output/fl_500_7.out.txt
+          python3 src/__main__.py --solver lp data/fl_1000_2 > output/fl_1000_2.out.txt
+          python3 src/__main__.py --solver lp data/fl_2000_2 > output/fl_2000_2.out.txt
 
       - name: СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛЫ
         uses: actions/upload-artifact@v4
         with:
-          name: output-grasp
+          name: output-lp
           path: output/
