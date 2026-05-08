@@ -15,8 +15,8 @@ class GRASPSolver(AbstractSolver):
     def __init__(
         self,
         time_budget: float = 540.0,
-        alpha: float = 0.1,
-        n_starts: int = 100,
+        alpha: float = 0.3,
+        n_starts: int = 400,
         seed: int = 0,
     ):
         self.time_budget = time_budget
