@@ -176,8 +176,8 @@ class LocalSearchSolver(AbstractSolver):
     def __init__(
         self,
         time_limit: float = 540.0,
-        patience: int = 300,
-        min_improvement_pct: float = 0.05,
+        patience: int = 50,
+        min_improvement_pct: float = 0.5,
         seed: int = 42,
     ):
         self.time_limit = time_limit
