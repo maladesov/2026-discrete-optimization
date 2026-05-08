@@ -1,4 +1,4 @@
-name: Прогон на оцениваемых данных (Greedy: Clarke-Wright + 2-opt)
+name: Прогон на оцениваемых данных (Greedy)
 
 on:
   push:
