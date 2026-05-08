@@ -7,6 +7,8 @@ from .base import (
     route_load,
 )
 from .greedy import GreedySolver
+from .local_search import LocalSearchSolver
+from .grasp import GRASPSolver
 
 __all__ = [
     "AbstractSolver",
@@ -16,4 +18,6 @@ __all__ = [
     "total_distance",
     "route_load",
     "GreedySolver",
+    "LocalSearchSolver",
+    "GRASPSolver",
 ]

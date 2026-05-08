@@ -3,13 +3,12 @@ import sys
 import concurrent.futures
 import time
 
-from solvers import (
-    VRPInstance,
-    GreedySolver,
-)
+from solvers import VRPInstance, GreedySolver, LocalSearchSolver, GRASPSolver
 
 SOLVERS = {
     "greedy": GreedySolver,
+    "ls": LocalSearchSolver,
+    "grasp": GRASPSolver,
 }
 
 
