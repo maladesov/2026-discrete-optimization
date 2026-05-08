@@ -1,0 +1,44 @@
+name: Прогон на оцениваемых данных (GRASP)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_scored:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup python312
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir numpy
+
+      - name: create output dir
+        run: mkdir -p output
+
+      - name: ПРОГОН НА ОЦЕНКУ
+        run: |
+          python3 src/__main__.py --solver grasp data/vrp_16_3_1 > output/vrp_16_3_1.out.txt
+          python3 src/__main__.py --solver grasp data/vrp_26_8_1 > output/vrp_26_8_1.out.txt
+          python3 src/__main__.py --solver grasp data/vrp_51_5_1 > output/vrp_51_5_1.out.txt
+          python3 src/__main__.py --solver grasp data/vrp_101_10_1 > output/vrp_101_10_1.out.txt
+          python3 src/__main__.py --solver grasp data/vrp_200_16_1 > output/vrp_200_16_1.out.txt
+          python3 src/__main__.py --solver grasp data/vrp_421_41_1 > output/vrp_421_41_1.out.txt
+
+      - name: СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛЫ
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: output/
