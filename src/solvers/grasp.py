@@ -35,8 +35,8 @@ def randomized_savings(
 class GRASPSolver(AbstractSolver):
     def __init__(
         self,
-        n_starts: int = 50,
-        alpha: float = 0.2,
+        n_starts: int = 100,
+        alpha: float = 0.3,
         time_limit: float = 540.0,
         seed: int = 42,
     ):
