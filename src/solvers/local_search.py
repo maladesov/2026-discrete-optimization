@@ -173,8 +173,16 @@ def perturb(routes, loads, D, instance, rng, frac: float = 0.15) -> bool:
 
 
 class LocalSearchSolver(AbstractSolver):
-    def __init__(self, time_limit: float = 540.0, seed: int = 42):
+    def __init__(
+        self,
+        time_limit: float = 540.0,
+        patience: int = 300,
+        min_improvement_pct: float = 0.05,
+        seed: int = 42,
+    ):
         self.time_limit = time_limit
+        self.patience = patience
+        self.min_improvement_pct = min_improvement_pct
         self.seed = seed
 
     def solve(self, instance: VRPInstance) -> VRPSolution:
@@ -186,6 +194,8 @@ class LocalSearchSolver(AbstractSolver):
         best_routes = [list(r) for r in routes]
         best_obj = total_distance(D, routes)
 
+        history = [best_obj]
+        threshold = self.min_improvement_pct / 100.0
         deadline = time.perf_counter() + self.time_limit
         while time.perf_counter() < deadline:
             if not perturb(routes, loads, D, instance, rng):
@@ -198,5 +208,10 @@ class LocalSearchSolver(AbstractSolver):
             else:
                 routes = [list(r) for r in best_routes]
                 loads = [route_load(instance, r) for r in routes]
+            history.append(best_obj)
+            if len(history) > self.patience:
+                past = history[-self.patience - 1]
+                if (past - best_obj) / max(past, 1e-9) < threshold:
+                    break
 
         return VRPSolution(routes=best_routes, objective=best_obj)
