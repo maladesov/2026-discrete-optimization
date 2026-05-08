@@ -17,9 +17,9 @@ class LPRelaxSolver(AbstractSolver):
     def __init__(
         self,
         time_budget: float = 540.0,
-        k_nearest: int = 35,
+        k_nearest: int = 50,
         seed: int = 0,
-        ls_budget_frac: float = 0.5,
+        ls_budget_frac: float = 0.7,
     ):
         self.time_budget = time_budget
         self.k_nearest = k_nearest
